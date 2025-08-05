@@ -1,0 +1,57 @@
+/* styles.css - extracted custom styles for Virtual Green Fleet Orchestrator */
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: #0d1117;
+    color: #c9d1d9;
+}
+.card {
+    background-color: #161b22;
+    border: 1px solid #30363d;
+    border-radius: 8px;
+}
+.btn-primary {
+    background-color: #238636;
+    color: white;
+    transition: background-color 0.3s;
+}
+.btn-primary:hover {
+    background-color: #2ea043;
+}
+.btn-secondary {
+    background-color: #21262d;
+    border: 1px solid #30363d;
+    transition: background-color 0.3s, border-color 0.3s;
+}
+.btn-secondary:hover {
+    background-color: #30363d;
+    border-color: #8b949e;
+}
+.active-mode {
+    background-color: #1f6feb;
+    color: white;
+}
+.status-dot {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    margin-right: 8px;
+}
+.status-available { background-color: #238636; box-shadow: 0 0 5px #238636; }
+.status-dispatching { background-color: #1f6feb; box-shadow: 0 0 5px #1f6feb; }
+.status-charging { background-color: #dbab09; box-shadow: 0 0 5px #dbab09; }
+.status-offline { background-color: #8b949e; }
+
+/* For animated numbers */
+@property --num {
+  syntax: '<integer>';
+  initial-value: 0;
+  inherits: false;
+}
+.animated-number {
+    transition: --num 1s;
+    counter-reset: num var(--num);
+}
+.animated-number::after {
+    content: counter(num);
+} 
