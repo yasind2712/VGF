@@ -63,6 +63,10 @@ const applyTheme = (theme) => {
         chart.data.datasets[1].backgroundColor = theme === 'dark' ? 'rgba(251,191,36,0.2)' : 'rgba(234,179,8,0.2)';
         chart.update('none');
     }
+    // Re-render fleet list so card backgrounds switch when theme changes
+    if (typeof renderFleetList === 'function') {
+        renderFleetList();
+    }
 };
 
 themeToggleBtn.addEventListener('click', () => {
