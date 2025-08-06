@@ -1,5 +1,26 @@
 // app.js - extracted script logic from index.html for the Virtual Green Fleet Orchestrator demo
 
+// --- SPLASH SCREEN ---
+const initSplashScreen = () => {
+    const splashScreen = document.getElementById('splash-screen');
+    const mainApp = document.getElementById('main-app');
+    
+    // Show splash screen initially
+    splashScreen.style.opacity = '1';
+    mainApp.style.opacity = '0';
+    
+    // After 3 seconds, fade out splash and fade in main app
+    setTimeout(() => {
+        splashScreen.style.opacity = '0';
+        mainApp.style.opacity = '1';
+        
+        // Remove splash screen from DOM after transition
+        setTimeout(() => {
+            splashScreen.style.display = 'none';
+        }, 1000);
+    }, 3000);
+};
+
 // --- MOCK DATA ---
 const fleets = [
     { id: 'f1', name: 'Metro School District', vehicleCount: 30, totalCapacityKWh: 3600, avgSoc: 0.85, status: 'available', icon: 'bus', type: 'School Bus', revenue: 0, savings: 0, communicationStatus: 'connected', lastResponse: null, location: 'Oakland, CA', gridZone: 'CAISO Zone 3', substation: 'Oakland 115kV' },
@@ -49,6 +70,7 @@ const currentTimeEl = document.getElementById('current-time');
 const fleetNameInputEl = document.getElementById('fleet-name-input');
 const vehicleTypeSelectEl = document.getElementById('vehicle-type-select');
 const vehicleCountInputEl = document.getElementById('vehicle-count-input');
+const locationSelectEl = document.getElementById('location-select');
 const onboardFleetBtn = document.getElementById('onboard-fleet-btn');
 const themeToggleBtn = document.getElementById('theme-toggle');
 const themeIconEl = document.getElementById('theme-icon');
@@ -907,6 +929,7 @@ runSimBtn.addEventListener('click', () => {
     const customName = fleetNameInputEl.value.trim();
     const customCount = parseInt(vehicleCountInputEl.value, 10);
     const customType = vehicleTypeSelectEl.value;
+    const customLocation = locationSelectEl.value;
 
     if (customName && customCount > 0) {
         const meta = vehicleTypeMeta[customType] || vehicleTypeMeta['Delivery Van'];
@@ -916,7 +939,8 @@ runSimBtn.addEventListener('click', () => {
             vehicleCount: customCount,
             totalCapacityKWh: meta.capacity * customCount,
             type: customType,
-            icon: meta.icon
+            icon: meta.icon,
+            location: customLocation
         };
 
         // Add to potential fleet templates for future reuse
@@ -1058,8 +1082,13 @@ const updateTelematicsData = () => {
 };
 
 // --- UX: Deselect template when user customises fields ---
-const clearTemplateSelection = () => { simFleetSelectEl.value = ''; };
-[fleetNameInputEl, vehicleTypeSelectEl, vehicleCountInputEl].forEach(el => {
+const clearTemplateSelection = () => { 
+    simFleetSelectEl.value = ''; 
+    fleetNameInputEl.value = '';
+    vehicleCountInputEl.value = '';
+    locationSelectEl.value = 'Oakland, CA'; // Reset to default
+};
+[fleetNameInputEl, vehicleTypeSelectEl, vehicleCountInputEl, locationSelectEl].forEach(el => {
     el.addEventListener('input', clearTemplateSelection);
     el.addEventListener('change', clearTemplateSelection);
 });
@@ -1069,6 +1098,7 @@ simFleetSelectEl.addEventListener('change', () => {
     if (simFleetSelectEl.value) {
         fleetNameInputEl.value = '';
         vehicleCountInputEl.value = '';
+        locationSelectEl.value = 'Oakland, CA';
     }
 });
 
@@ -1145,6 +1175,10 @@ const showOnboardingModal = (fleet) => {
                 <span class="font-bold text-white">${fleet.vehicleCount}</span>
             </div>
             <div class="flex justify-between">
+                <span class="font-medium text-gray-300">Location:</span>
+                <span class="font-bold text-white">${fleet.location || 'Oakland, CA'}</span>
+            </div>
+            <div class="flex justify-between">
                 <span class="font-medium text-gray-300">Total Capacity:</span>
                 <span class="font-bold text-white">${fleet.totalCapacityKWh} kWh</span>
             </div>
@@ -1182,6 +1216,10 @@ const startLiveUpdates = () => {
 };
 
 document.addEventListener('DOMContentLoaded', () => {
+    // Initialize splash screen first
+    initSplashScreen();
+    
+    // Initialize all other components
     createChart();
     createSimChart(); // Initialize simulation chart
     renderFleetList();

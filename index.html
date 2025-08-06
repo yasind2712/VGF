@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Virtual Green Fleet Orchestrator</title>
+    <link rel="icon" type="image/jpeg" href="VGF.jpg">
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -12,15 +13,27 @@
 </head>
 <body class="p-4 lg:p-6 light-mode">
 
+    <!-- Splash Screen -->
+    <div id="splash-screen" class="fixed inset-0 bg-gradient-to-br from-blue-900 via-black to-green-900 flex items-center justify-center z-50 transition-opacity duration-1000">
+        <div class="text-center">
+            <img src="VGF.jpg" alt="VGF Logo" class="w-32 h-32 mx-auto mb-6 rounded-2xl shadow-2xl animate-pulse">
+            <h1 class="text-4xl font-bold text-white mb-2">VGF Orchestrator</h1>
+            <p class="text-xl text-gray-300 mb-4">Virtual Green Fleet</p>
+            <div class="flex items-center justify-center space-x-2">
+                <div class="w-2 h-2 bg-blue-400 rounded-full animate-bounce"></div>
+                <div class="w-2 h-2 bg-green-400 rounded-full animate-bounce" style="animation-delay: 0.1s"></div>
+                <div class="w-2 h-2 bg-blue-400 rounded-full animate-bounce" style="animation-delay: 0.2s"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main App Content -->
+    <div id="main-app" class="opacity-0 transition-opacity duration-1000">
+
     <!-- Header -->
     <header class="flex items-center justify-between mb-6">
         <div class="flex items-center space-x-3">
-            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="text-blue-500">
-                <path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                <path d="M16.24 7.76C15.0748 6.59762 13.5573 6.00133 12 6C10.4427 6.00133 8.92525 6.59762 7.76002 7.76M18.36 5.64C16.8243 4.10351 14.4735 3.22473 12 3.22473C9.52652 3.22473 7.17569 4.10351 5.64002 5.64" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                <path d="M12 12L8 8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                <path d="M12 18V12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
+            <img src="VGF.jpg" alt="VGF Logo" class="w-10 h-10 rounded-lg object-cover">
             <h1 class="text-2xl lg:text-3xl font-bold text-white">VGF Orchestrator</h1>
         </div>
         <div class="flex items-center space-x-4">
@@ -393,7 +406,7 @@
                         <h2 class="text-xl font-bold mb-4 text-white">Synthetic Telematics & Planning Engine</h2>
                         <p class="text-sm text-gray-400 mb-6">Configure a potential fleet (or choose an existing template) to simulate its grid impact and financial value.</p>
                         
-                <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-4">
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-4">
                     <input id="fleet-name-input" type="text" placeholder="Fleet Name" class="p-2 rounded-md bg-gray-800 border border-gray-600 text-white">
                     <select id="vehicle-type-select" class="p-2 rounded-md bg-gray-800 border border-gray-600 text-white">
                         <option value="School Bus">School Bus</option>
@@ -404,6 +417,14 @@
                         <option value="Yard Tractor">Yard Tractor</option>
                     </select>
                     <input id="vehicle-count-input" type="number" min="1" placeholder="Vehicle Count" class="p-2 rounded-md bg-gray-800 border border-gray-600 text-white">
+                    <select id="location-select" class="p-2 rounded-md bg-gray-800 border border-gray-600 text-white">
+                        <option value="Oakland, CA">Oakland, CA</option>
+                        <option value="San Francisco, CA">San Francisco, CA</option>
+                        <option value="Berkeley, CA">Berkeley, CA</option>
+                        <option value="San Jose, CA">San Jose, CA</option>
+                        <option value="Fremont, CA">Fremont, CA</option>
+                        <option value="Oakland Port, CA">Oakland Port, CA</option>
+                    </select>
                 </div>
                         
                         <div class="flex flex-col sm:flex-row gap-4 mb-4">
@@ -582,6 +603,8 @@
             </div>
         </div>
     </div>
+
+    </div> <!-- End of main-app div -->
 
     <script src="app.js"></script>
 </body>
