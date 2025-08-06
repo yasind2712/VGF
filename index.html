@@ -31,6 +31,64 @@
         </div>
     </header>
     
+    <!-- Product Description -->
+    <div class="mb-6 p-3 bg-blue-900/20 border border-blue-500/30 rounded-lg">
+        <p class="text-center text-sm text-gray-300">
+            <i class="ph-lightning mr-2"></i>
+            <strong>Virtual Green Fleet Orchestrator:</strong> 
+            AI-powered platform that transforms electric vehicle fleets into dispatchable grid assets, 
+            enabling utilities to defer infrastructure costs while providing fleet operators with new revenue streams.
+        </p>
+    </div>
+
+    <!-- Main Layout with Sidebar -->
+    <div class="flex gap-6">
+        <!-- Sidebar Navigation -->
+        <div id="sidebar" class="w-64 flex-shrink-0 transition-all duration-300">
+            <nav class="card p-4">
+                <div class="flex items-center justify-between mb-4">
+                    <h2 class="text-lg font-bold text-white">Navigation</h2>
+                    <button id="sidebar-toggle" class="p-1 rounded-md btn-secondary" title="Toggle Sidebar">
+                        <i class="ph-list text-sm"></i>
+                    </button>
+                </div>
+                <div class="space-y-2">
+                    <button class="nav-item active w-full text-left p-3 rounded-lg flex items-center space-x-3" data-tab="dashboard">
+                        <i class="ph-gauge text-lg"></i>
+                        <span>Dashboard</span>
+                    </button>
+                    <button class="nav-item w-full text-left p-3 rounded-lg flex items-center space-x-3" data-tab="fleets">
+                        <i class="ph-truck text-lg"></i>
+                        <span>Fleet Management</span>
+                    </button>
+                    <button class="nav-item w-full text-left p-3 rounded-lg flex items-center space-x-3" data-tab="communication">
+                        <i class="ph-radio-button text-lg"></i>
+                        <span>Communication</span>
+                    </button>
+                    <button class="nav-item w-full text-left p-3 rounded-lg flex items-center space-x-3" data-tab="economics">
+                        <i class="ph-chart-line text-lg"></i>
+                        <span>Economics</span>
+                    </button>
+                    <button class="nav-item w-full text-left p-3 rounded-lg flex items-center space-x-3" data-tab="analytics">
+                        <i class="ph-trend-up text-lg"></i>
+                        <span>Analytics</span>
+                    </button>
+                    <button class="nav-item w-full text-left p-3 rounded-lg flex items-center space-x-3" data-tab="simulation">
+                        <i class="ph-cpu text-lg"></i>
+                        <span>Simulation</span>
+                    </button>
+                    <button class="nav-item w-full text-left p-3 rounded-lg flex items-center space-x-3" data-tab="help">
+                        <i class="ph-question text-lg"></i>
+                        <span>Help & Guide</span>
+                    </button>
+                </div>
+            </nav>
+        </div>
+
+        <!-- Main Content Area -->
+        <div class="flex-1">
+            <!-- Dashboard Tab -->
+            <div id="tab-dashboard" class="tab-content active">
     <!-- Utility Value Proposition KPIs -->
     <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
         <div class="card p-4 text-center">
@@ -52,33 +110,289 @@
     </div>
 
     <!-- Main Dashboard Grid -->
-    <div class="grid grid-cols-1 lg:grid-cols-4 gap-6">
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                    <!-- Chart Panel -->
+                    <div class="lg:col-span-2 card p-4">
+                        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-4">
+                            <h2 class="text-xl font-bold text-white">System Power Flow</h2>
+                        </div>
+                        <div class="flex-grow min-h-[300px]">
+                            <canvas id="powerChart"></canvas>
+                        </div>
+                    </div>
 
-        <!-- Left Panel: Fleets -->
-        <div class="lg:col-span-1 flex flex-col gap-6">
-            <div class="card p-4 flex-grow">
-                <h2 class="text-xl font-bold mb-4 text-white">Enrolled Fleets</h2>
-                <div id="fleet-list" class="space-y-3 overflow-y-auto max-h-[calc(100vh-300px)]">
-                    <!-- Fleet items will be injected here -->
+                    <!-- Grid Status Panel -->
+                    <div class="card p-4">
+                        <h2 class="text-xl font-bold mb-4 text-white">Grid Status</h2>
+                        <div class="space-y-3">
+                            <div class="flex justify-between items-center">
+                                <span class="font-medium text-gray-300">Frequency</span>
+                                <span id="grid-freq" class="font-bold text-lg text-white">60.00 Hz</span>
+                            </div>
+                            <div class="flex justify-between items-center">
+                                <span class="font-medium text-gray-300">System Demand</span>
+                                <span id="grid-demand" class="font-bold text-lg text-white">0 MW</span>
+                            </div>
+                            <div class="flex justify-between items-center">
+                                <span class="font-medium text-gray-300">Market Price</span>
+                                <span id="grid-price" class="font-bold text-lg text-green-400">$0/MWh</span>
+                            </div>
+                        </div>
+                        
+                        <!-- Location Details -->
+                        <div class="mt-4 pt-4 border-t border-gray-700">
+                            <h3 class="text-sm font-semibold text-gray-300 mb-2">Grid Zone Details</h3>
+                            <div class="space-y-2 text-xs">
+                                <div class="flex justify-between">
+                                    <span class="text-gray-400">Primary Zone:</span>
+                                    <span id="primary-zone" class="text-white">CAISO Zone 3</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span class="text-gray-400">Substation:</span>
+                                    <span id="substation" class="text-white">Oakland 115kV</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span class="text-gray-400">Fleet Coverage:</span>
+                                    <span id="fleet-coverage" class="text-blue-400">4 Zones</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span class="text-gray-400">Grid Constraints:</span>
+                                    <span id="grid-constraints" class="text-green-400">None</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Event Log -->
+                <div class="card p-4 mt-6">
+                    <h2 class="text-xl font-bold mb-4 text-white">Orchestrator Event Log</h2>
+                    <div id="event-log" class="space-y-2 overflow-y-auto h-64 text-sm">
+                        <!-- Log entries will be injected here -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Fleet Management Tab -->
+            <div id="tab-fleets" class="tab-content hidden">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                    <!-- Fleet List -->
+                    <div class="card p-4">
+                        <h2 class="text-xl font-bold mb-4 text-white">Enrolled Fleets</h2>
+                        <div id="fleet-list" class="space-y-3">
+                            <!-- Fleet items will be injected here -->
+                        </div>
+                    </div>
+
+                    <!-- Synthetic Telematics Engine -->
+                    <div class="card p-4">
+                        <h2 class="text-xl font-bold mb-4 text-white">Synthetic Telematics Engine</h2>
+                        <div class="space-y-4">
+                            <div class="bg-blue-900/20 p-3 rounded-lg">
+                                <h3 class="font-semibold text-blue-300 mb-2">Real-Time Fleet Modeling</h3>
+                                <div class="space-y-2 text-sm">
+                                    <div class="flex justify-between">
+                                        <span class="text-gray-400">Active Patterns:</span>
+                                        <span class="text-white" id="active-patterns">4 Fleet Types</span>
+                                    </div>
+                                    <div class="flex justify-between">
+                                        <span class="text-gray-400">Route Simulation:</span>
+                                        <span class="text-white" id="route-simulation">Real-time</span>
+                                    </div>
+                                    <div class="flex justify-between">
+                                        <span class="text-gray-400">SoC Updates:</span>
+                                        <span class="text-white" id="soc-updates">Every 5 min</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="bg-green-900/20 p-3 rounded-lg">
+                                <h3 class="font-semibold text-green-300 mb-2">Fleet Behavior Patterns</h3>
+                                <div class="space-y-2 text-sm">
+                                    <div class="flex justify-between">
+                                        <span class="text-gray-400">School Bus:</span>
+                                        <span class="text-white">6 AM - 6 PM, 120 mi/day</span>
+                                    </div>
+                                    <div class="flex justify-between">
+                                        <span class="text-gray-400">Delivery Van:</span>
+                                        <span class="text-white">8 AM - 8 PM, 80 mi/day</span>
+                                    </div>
+                                    <div class="flex justify-between">
+                                        <span class="text-gray-400">Municipal Car:</span>
+                                        <span class="text-white">7 AM - 5 PM, 60 mi/day</span>
+                                    </div>
+                                    <div class="flex justify-between">
+                                        <span class="text-gray-400">Rideshare:</span>
+                                        <span class="text-white">5 AM - 11 PM, 150 mi/day</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="bg-purple-900/20 p-3 rounded-lg">
+                                <h3 class="font-semibold text-purple-300 mb-2">SoC Calculation Engine</h3>
+                                <div class="space-y-2 text-sm">
+                                    <p class="text-gray-400">• Real-time consumption based on operational patterns</p>
+                                    <p class="text-gray-400">• Charging optimization during low-price periods</p>
+                                    <p class="text-gray-400">• Route assurance to meet daily requirements</p>
+                                    <p class="text-gray-400">• Predictive modeling for grid dispatch decisions</p>
+                                </div>
+                            </div>
+
+                            <div class="bg-yellow-900/20 p-3 rounded-lg">
+                                <h3 class="font-semibold text-yellow-300 mb-2">Telematics Features</h3>
+                                <div class="space-y-2 text-sm">
+                                    <div class="flex justify-between">
+                                        <span class="text-gray-400">Location Tracking:</span>
+                                        <span class="text-white">Grid Zone Aware</span>
+                                    </div>
+                                    <div class="flex justify-between">
+                                        <span class="text-gray-400">Charging Windows:</span>
+                                        <span class="text-white">Optimized</span>
+                                    </div>
+                                    <div class="flex justify-between">
+                                        <span class="text-gray-400">Range Estimation:</span>
+                                        <span class="text-white">Real-time</span>
+                                    </div>
+                                    <div class="flex justify-between">
+                                        <span class="text-gray-400">Route Planning:</span>
+                                        <span class="text-white">AI-Powered</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Communication Tab -->
+            <div id="tab-communication" class="tab-content hidden">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                    <!-- Fleet Communication Panel -->
+                    <div class="card p-4">
+                        <h2 class="text-xl font-bold mb-4 text-white">Fleet Communication</h2>
+                        <div class="space-y-3">
+                            <div class="flex justify-between items-center">
+                                <span class="font-medium text-gray-300">Pending Requests</span>
+                                <span id="pending-requests" class="font-bold text-lg text-yellow-400">0</span>
+                            </div>
+                            <div class="flex justify-between items-center">
+                                <span class="font-medium text-gray-300">Confirmed Dispatch</span>
+                                <span id="confirmed-dispatch" class="font-bold text-lg text-green-400">0 MW</span>
+                            </div>
+                            <div class="flex justify-between items-center">
+                                <span class="font-medium text-gray-300">Response Rate</span>
+                                <span id="response-rate" class="font-bold text-lg text-blue-400">0%</span>
+                            </div>
+                            <div class="mt-3 p-2 bg-gray-800/50 rounded text-xs">
+                                <p class="text-gray-400">Communication: API + SMS Alerts</p>
+                                <p class="text-gray-400">Response Window: 15 min</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Market Integration Panel -->
+                    <div class="card p-4">
+                        <h2 class="text-xl font-bold mb-4 text-white">Market Integration</h2>
+                        <div class="space-y-3">
+                            <div class="flex justify-between items-center">
+                                <span class="font-medium text-gray-300">Bid Capacity</span>
+                                <span id="bid-capacity" class="font-bold text-lg text-blue-400">0 MW</span>
+                            </div>
+                            <div class="flex justify-between items-center">
+                                <span class="font-medium text-gray-300">Market Revenue</span>
+                                <span id="market-revenue" class="font-bold text-lg text-green-400">$0</span>
+                            </div>
+                            <div class="flex justify-between items-center">
+                                <span class="font-medium text-gray-300">Carbon Avoided</span>
+                                <span id="carbon-avoided" class="font-bold text-lg text-emerald-400">0 kg CO₂</span>
+                            </div>
+                            <div class="mt-3 p-2 bg-gray-800/50 rounded text-xs">
+                                <p class="text-gray-400">ISO/RTO Integration: CAISO</p>
+                                <p class="text-gray-400">Program: Demand Response</p>
+                            </div>
                 </div>
             </div>
         </div>
 
-        <!-- Center Panel: Chart & Controls -->
-        <div class="lg:col-span-2 card p-4 flex flex-col">
-            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-4">
-                <h2 class="text-xl font-bold text-white">System Power Flow</h2>
-                <div class="flex space-x-2 mt-2 sm:mt-0">
-                    <button id="mode-live" class="px-4 py-2 rounded-md font-semibold text-sm active-mode">Live Mode</button>
-                    <button id="mode-sim" class="px-4 py-2 rounded-md font-semibold text-sm btn-secondary">Simulation</button>
+                <!-- Dispatch Requests -->
+                <div class="card p-4 mt-6">
+                    <h2 class="text-xl font-bold mb-4 text-white">Dispatch Requests</h2>
+                    <div id="dispatch-requests" class="space-y-2 max-h-64 overflow-y-auto">
+                        <!-- Dispatch request items will be injected here -->
+                    </div>
+                    <div class="mt-3 p-2 bg-gray-800/50 rounded text-xs">
+                        <p class="text-gray-400">Requests sent to fleet operators</p>
+                        <p class="text-gray-400">15-minute response window</p>
+                    </div>
                 </div>
             </div>
-            <div class="flex-grow min-h-[300px]">
-                <canvas id="powerChart"></canvas>
+
+            <!-- Economics Tab -->
+            <div id="tab-economics" class="tab-content hidden">
+                <div class="card p-4">
+                    <h2 class="text-xl font-bold mb-4 text-white">Fleet Economics Dashboard</h2>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <!-- Utility Benefits -->
+                        <div class="space-y-4">
+                            <h3 class="text-lg font-semibold text-blue-400 flex items-center">
+                                <i class="ph-buildings mr-2"></i>Utility Benefits
+                            </h3>
+                            <div class="grid grid-cols-2 gap-3">
+                                <div class="bg-blue-900/20 p-3 rounded-lg">
+                                    <p class="text-sm text-gray-400">Grid Stability</p>
+                                    <p class="text-lg font-bold text-white" id="grid-stability">100%</p>
+                                </div>
+                                <div class="bg-blue-900/20 p-3 rounded-lg">
+                                    <p class="text-sm text-gray-400">Peak Shaving</p>
+                                    <p class="text-lg font-bold text-white" id="peak-shaving">0 MW</p>
+                                </div>
+                                <div class="bg-blue-900/20 p-3 rounded-lg">
+                                    <p class="text-sm text-gray-400">Voltage Support</p>
+                                    <p class="text-lg font-bold text-white" id="voltage-support">Active</p>
+                                </div>
+                                <div class="bg-blue-900/20 p-3 rounded-lg">
+                                    <p class="text-sm text-gray-400">Frequency Reg</p>
+                                    <p class="text-lg font-bold text-white" id="frequency-reg">Active</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Fleet Operator Benefits -->
+                        <div class="space-y-4">
+                            <h3 class="text-lg font-semibold text-green-400 flex items-center">
+                                <i class="ph-truck mr-2"></i>Fleet Operator Benefits
+                            </h3>
+                            <div class="grid grid-cols-2 gap-3">
+                                <div class="bg-green-900/20 p-3 rounded-lg">
+                                    <p class="text-sm text-gray-400">Revenue Generated</p>
+                                    <p class="text-lg font-bold text-white" id="fleet-revenue">$0</p>
+                                </div>
+                                <div class="bg-green-900/20 p-3 rounded-lg">
+                                    <p class="text-sm text-gray-400">TCO Reduction</p>
+                                    <p class="text-lg font-bold text-white" id="tco-reduction">0%</p>
+                                </div>
+                                <div class="bg-green-900/20 p-3 rounded-lg">
+                                    <p class="text-sm text-gray-400">Demand Savings</p>
+                                    <p class="text-lg font-bold text-white" id="demand-savings">$0</p>
+                                </div>
+                                <div class="bg-green-900/20 p-3 rounded-lg">
+                                    <p class="text-sm text-gray-400">Route Assurance</p>
+                                    <p class="text-lg font-bold text-white" id="route-assurance">100%</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div id="sim-controls" class="hidden mt-4 p-4 bg-gray-900/50 rounded-lg">
-                <h3 class="font-bold text-lg mb-2 text-white">Synthetic Telematics & Planning Engine</h3>
-                <p class="text-sm text-gray-400 mb-3">Configure a potential fleet (or choose an existing template) to simulate its grid impact and financial value.</p>
+
+            <!-- Simulation Tab -->
+            <div id="tab-simulation" class="tab-content hidden">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                    <!-- Simulation Controls -->
+                    <div class="card p-4">
+                        <h2 class="text-xl font-bold mb-4 text-white">Synthetic Telematics & Planning Engine</h2>
+                        <p class="text-sm text-gray-400 mb-6">Configure a potential fleet (or choose an existing template) to simulate its grid impact and financial value.</p>
+                        
                 <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-4">
                     <input id="fleet-name-input" type="text" placeholder="Fleet Name" class="p-2 rounded-md bg-gray-800 border border-gray-600 text-white">
                     <select id="vehicle-type-select" class="p-2 rounded-md bg-gray-800 border border-gray-600 text-white">
@@ -91,48 +405,182 @@
                     </select>
                     <input id="vehicle-count-input" type="number" min="1" placeholder="Vehicle Count" class="p-2 rounded-md bg-gray-800 border border-gray-600 text-white">
                 </div>
-                <div class="flex flex-col sm:flex-row gap-4 mb-2">
-                    <select id="sim-fleet-select" class="flex-grow p-2 rounded-md bg-gray-800 border border-gray-600 text-white">
-                        <!-- Sim fleet options will be injected here -->
-                    </select>
-                    <button id="run-sim-btn" class="btn-primary px-4 py-2 rounded-md font-bold flex-shrink-0">Run Simulation</button>
-                </div>
+                        
+                        <div class="flex flex-col sm:flex-row gap-4 mb-4">
+                            <select id="sim-fleet-select" class="flex-grow p-2 rounded-md bg-gray-800 border border-gray-600 text-white min-w-0">
+                                <!-- Sim fleet options will be injected here -->
+                            </select>
+                            <button id="run-sim-btn" class="btn-primary px-4 py-2 rounded-md font-bold flex-shrink-0 whitespace-nowrap">Run Simulation</button>
+                        </div>
+                        
                 <div id="sim-results" class="hidden mt-4 text-center p-3 bg-green-900/50 border border-green-500 rounded-lg">
                     <p class="font-bold text-green-300">Financial Pro-Forma Complete</p>
                     <p id="sim-revenue" class="text-white text-lg"></p>
                     <p id="sim-tco" class="text-sm text-gray-300"></p>
                     <button id="onboard-fleet-btn" class="btn-primary mt-3 px-4 py-2 rounded-md hidden">Onboard Fleet</button>
+                        </div>
+                    </div>
+
+                    <!-- Simulation Chart -->
+                    <div class="card p-4">
+                        <h2 class="text-xl font-bold mb-4 text-white">Simulation Results</h2>
+                        <div class="flex-grow min-h-[300px]">
+                            <canvas id="simChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Analytics Tab -->
+            <div id="tab-analytics" class="tab-content hidden">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                    <!-- Performance Trends -->
+                    <div class="card p-4">
+                        <h2 class="text-xl font-bold mb-4 text-white">Performance Trends</h2>
+                        <div class="space-y-4">
+                            <div class="grid grid-cols-2 gap-4">
+                                <div class="bg-blue-900/20 p-3 rounded-lg">
+                                    <p class="text-sm text-gray-400">Weekly Revenue</p>
+                                    <p class="text-lg font-bold text-white" id="weekly-revenue">$0</p>
+                                    <p class="text-xs text-green-400">+12.5% vs last week</p>
+                                </div>
+                                <div class="bg-green-900/20 p-3 rounded-lg">
+                                    <p class="text-sm text-gray-400">Response Rate</p>
+                                    <p class="text-lg font-bold text-white" id="avg-response-rate">0%</p>
+                                    <p class="text-xs text-blue-400">+5.2% vs last week</p>
+                                </div>
+                            </div>
+                            <div class="bg-gray-800/50 p-3 rounded">
+                                <h3 class="font-semibold text-gray-300 mb-2">VGF Agent Insights</h3>
+                                <div id="agent-insights" class="space-y-2 text-sm">
+                                    <p class="text-gray-400">• Fleet operators respond best to requests during morning hours</p>
+                                    <p class="text-gray-400">• Market price spikes occur most frequently on Tuesdays</p>
+                                    <p class="text-gray-400">• Zone 3 has highest dispatch success rate</p>
+                                </div>
                 </div>
             </div>
         </div>
 
-        <!-- Right Panel: Status & Log -->
-        <div class="lg:col-span-1 flex flex-col gap-6">
+                    <!-- Historical Data -->
             <div class="card p-4">
-                <h2 class="text-xl font-bold mb-4 text-white">Grid Status</h2>
-                <div class="space-y-3">
-                    <div class="flex justify-between items-center">
-                        <span class="font-medium text-gray-300">Frequency</span>
-                        <span id="grid-freq" class="font-bold text-lg text-white">60.00 Hz</span>
-                    </div>
-                    <div class="flex justify-between items-center">
-                        <span class="font-medium text-gray-300">System Demand</span>
-                        <span id="grid-demand" class="font-bold text-lg text-white">0 MW</span>
-                    </div>
-                    <div class="flex justify-between items-center">
-                        <span class="font-medium text-gray-300">Market Price</span>
-                        <span id="grid-price" class="font-bold text-lg text-green-400">$0/MWh</span>
+                        <h2 class="text-xl font-bold mb-4 text-white">Historical Analysis</h2>
+                        <div class="space-y-4">
+                            <div class="bg-gray-800/50 p-3 rounded">
+                                <h3 class="font-semibold text-gray-300 mb-2">Top Performing Fleets</h3>
+                                <div id="top-fleets" class="space-y-2 text-sm">
+                                    <div class="flex justify-between">
+                                        <span class="text-gray-400">Prime Logistics</span>
+                                        <span class="text-gray-600">$2,450/week</span>
+                                    </div>
+                                    <div class="flex justify-between">
+                                        <span class="text-gray-400">RideShare Partners</span>
+                                        <span class="text-gray-600">$1,890/week</span>
+                                    </div>
+                                    <div class="flex justify-between">
+                                        <span class="text-gray-400">Metro School District</span>
+                                        <span class="text-gray-600">$1,230/week</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="bg-gray-800/50 p-3 rounded">
+                                <h3 class="font-semibold text-gray-300 mb-2">Market Opportunities</h3>
+                                <div id="market-opportunities" class="space-y-2 text-sm">
+                                    <p class="text-gray-400">• Peak hours: 2-6 PM daily</p>
+                                    <p class="text-gray-400">• Best dispatch days: Tuesday, Thursday</p>
+                                    <p class="text-gray-400">• Optimal price threshold: $150/MWh</p>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
-            <div class="card p-4 flex-grow">
-                <h2 class="text-xl font-bold mb-4 text-white">Orchestrator Event Log</h2>
-                <div id="event-log" class="space-y-2 overflow-y-auto h-80 text-sm">
-                    <!-- Log entries will be injected here -->
+
+            <!-- Help & Guide Tab -->
+            <div id="tab-help" class="tab-content hidden">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                    <!-- Quick Start Guide -->
+                    <div class="card p-4">
+                        <h2 class="text-xl font-bold mb-4 text-white">Quick Start Guide</h2>
+                        <div class="space-y-4">
+                            <div class="bg-blue-900/20 p-3 rounded-lg">
+                                <h3 class="font-semibold text-blue-300 mb-2">Getting Started</h3>
+                                <ol class="text-sm text-gray-400 space-y-1">
+                                    <li>1. Review Dashboard for system status</li>
+                                    <li>2. Check Fleet Management for enrolled fleets</li>
+                                    <li>3. Monitor Communication tab for dispatch requests</li>
+                                    <li>4. Use Simulation to test new fleet configurations</li>
+                                </ol>
+                            </div>
+                            <div class="bg-green-900/20 p-3 rounded-lg">
+                                <h3 class="font-semibold text-green-300 mb-2">Key Features</h3>
+                                <ul class="text-sm text-gray-400 space-y-1">
+                                    <li>• VGF Agent handles all communication automatically</li>
+                                    <li>• Real-time grid status and market prices</li>
+                                    <li>• Fleet economics tracking and optimization</li>
+                                    <li>• Location-aware dispatch decisions</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Tips & Best Practices -->
+                    <div class="card p-4">
+                        <h2 class="text-xl font-bold mb-4 text-white">Tips & Best Practices</h2>
+                        <div class="space-y-4">
+                            <div class="bg-yellow-900/20 p-3 rounded-lg">
+                                <h3 class="font-semibold text-yellow-300 mb-2">Pro Tips</h3>
+                                <ul class="text-sm text-gray-400 space-y-1">
+                                    <li>• Monitor Analytics tab for performance insights</li>
+                                    <li>• Check grid constraints before adding new fleets</li>
+                                    <li>• Review communication response rates regularly</li>
+                                    <li>• Use simulation to validate fleet configurations</li>
+                                </ul>
+                            </div>
+                            <div class="bg-purple-900/20 p-3 rounded-lg">
+                                <h3 class="font-semibold text-purple-300 mb-2">Troubleshooting</h3>
+                                <ul class="text-sm text-gray-400 space-y-1">
+                                    <li>• Low response rates? Check fleet communication status</li>
+                                    <li>• Grid constraints? Review zone capacity limits</li>
+                                    <li>• Revenue issues? Verify market price thresholds</li>
+                                    <li>• System errors? Check event log for details</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Onboarding Modal -->
+    <div id="onboarding-modal" class="fixed inset-0 bg-black bg-opacity-50 hidden z-50">
+        <div class="flex items-center justify-center min-h-screen p-4">
+            <div class="card p-6 max-w-md w-full">
+                <h3 class="text-xl font-bold mb-4 text-white">Onboard New Fleet</h3>
+                <div id="onboarding-details" class="mb-4">
+                    <!-- Fleet details will be injected here -->
+                </div>
+                <div class="flex gap-3">
+                    <button id="confirm-onboard-btn" class="btn-primary px-4 py-2 rounded-md font-bold flex-1">Confirm Onboarding</button>
+                    <button id="cancel-onboard-btn" class="btn-secondary px-4 py-2 rounded-md font-bold flex-1">Cancel</button>
+                </div>
                 </div>
             </div>
         </div>
 
+    <!-- Communication Message Modal -->
+    <div id="communication-modal" class="fixed inset-0 bg-black bg-opacity-50 hidden z-50">
+        <div class="flex items-center justify-center min-h-screen p-4">
+            <div class="card p-6 max-w-lg w-full">
+                <h3 class="text-xl font-bold mb-4 text-white">Communication Message</h3>
+                <div id="communication-details" class="mb-4">
+                    <!-- Communication details will be injected here -->
+                </div>
+                <div class="flex gap-3">
+                    <button id="close-communication-btn" class="btn-secondary px-4 py-2 rounded-md font-bold flex-1">Close</button>
+                </div>
+            </div>
+        </div>
     </div>
 
     <script src="app.js"></script>
