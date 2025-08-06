@@ -1,4 +1,57 @@
 /* styles.css - extracted custom styles for Virtual Green Fleet Orchestrator */
+/* THEME VARIABLES */
+body.light-mode {
+    background-color: #f3f4f6;
+    color: #1f2937;
+}
+
+body.dark-mode {
+    background-color: #0d1117;
+    color: #c9d1d9;
+}
+
+body.light-mode .card {
+    background-color: #ffffff;
+    border-color: #e5e7eb;
+}
+body.dark-mode .card {
+    background-color: #161b22;
+    border-color: #30363d;
+}
+
+body.light-mode .btn-primary {
+    background-color: #1d4ed8;
+    color: white;
+}
+body.light-mode .btn-secondary {
+    background-color: #e5e7eb;
+    color: #1f2937;
+}
+
+body.light-mode .text-white {
+    color: #1f2937 !important;
+}
+
+body.light-mode .text-gray-400 {
+    color: #6b7280 !important;
+}
+
+/* Ensure fleet list uses dark text */
+body.light-mode .card .text-white,
+body.light-mode .card .text-gray-400 {
+    color: #1f2937 !important;
+}
+body.light-mode .card .text-gray-400 {
+    color: #4b5563 !important;
+}
+
+body.light-mode .status-available { background-color: #16a34a; }
+body.light-mode .status-dispatching { background-color: #2563eb; }
+body.light-mode .status-charging { background-color: #d97706; }
+body.light-mode .status-offline { background-color: #6b7280; }
+
+/* existing dark-theme specific colors keep working due to existing classes */
+
 body {
     font-family: 'Inter', sans-serif;
     background-color: #0d1117;
@@ -54,4 +107,33 @@ body {
 }
 .animated-number::after {
     content: counter(num);
+}
+
+/* Simulation controls panel */
+body.light-mode #sim-controls {
+    background-color: #f9fafb !important;
+    border: 1px solid #e5e7eb !important;
+}
+
+/* Inputs & selects inside light mode */
+body.light-mode select,
+body.light-mode input {
+    background-color: #ffffff !important;
+    border-color: #d1d5db !important;
+    color: #1f2937 !important;
+}
+
+body.light-mode .bg-gray-800 { background-color: #ffffff !important; }
+body.light-mode .border-gray-600 { border-color: #d1d5db !important; } 
+
+body.light-mode #sim-results {
+    background-color: #d1fae5 !important;
+    border-color: #10b981 !important;
+}
+body.light-mode #sim-results .text-green-300 {
+    color: #065f46 !important;
+}
+body.light-mode #sim-results .text-white,
+body.light-mode #sim-results .text-gray-300 {
+    color: #065f46 !important;
 } 

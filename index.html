@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="styles.css">
     <script src="https://unpkg.com/phosphor-icons"></script>
 </head>
-<body class="p-4 lg:p-6">
+<body class="p-4 lg:p-6 light-mode">
 
     <!-- Header -->
     <header class="flex items-center justify-between mb-6">
@@ -23,7 +23,12 @@
             </svg>
             <h1 class="text-2xl lg:text-3xl font-bold text-white">VGF Orchestrator</h1>
         </div>
-        <div id="current-time" class="hidden md:block text-lg font-medium text-gray-400"></div>
+        <div class="flex items-center space-x-4">
+            <button id="theme-toggle" class="p-2 rounded-md btn-secondary" title="Toggle Dark Mode">
+                <i id="theme-icon" class="ph-moon text-lg"></i>
+            </button>
+            <div id="current-time" class="hidden md:block text-lg font-medium text-gray-400"></div>
+        </div>
     </header>
     
     <!-- Utility Value Proposition KPIs -->
@@ -73,8 +78,20 @@
             </div>
             <div id="sim-controls" class="hidden mt-4 p-4 bg-gray-900/50 rounded-lg">
                 <h3 class="font-bold text-lg mb-2 text-white">Synthetic Telematics & Planning Engine</h3>
-                <p class="text-sm text-gray-400 mb-3">Select a potential fleet to simulate its grid impact and project its financial value.</p>
-                <div class="flex flex-col sm:flex-row gap-4">
+                <p class="text-sm text-gray-400 mb-3">Configure a potential fleet (or choose an existing template) to simulate its grid impact and financial value.</p>
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-4">
+                    <input id="fleet-name-input" type="text" placeholder="Fleet Name" class="p-2 rounded-md bg-gray-800 border border-gray-600 text-white">
+                    <select id="vehicle-type-select" class="p-2 rounded-md bg-gray-800 border border-gray-600 text-white">
+                        <option value="School Bus">School Bus</option>
+                        <option value="Delivery Van">Delivery Van</option>
+                        <option value="Municipal Car">Municipal Car</option>
+                        <option value="Rideshare">Rideshare</option>
+                        <option value="Refuse Truck">Refuse Truck</option>
+                        <option value="Yard Tractor">Yard Tractor</option>
+                    </select>
+                    <input id="vehicle-count-input" type="number" min="1" placeholder="Vehicle Count" class="p-2 rounded-md bg-gray-800 border border-gray-600 text-white">
+                </div>
+                <div class="flex flex-col sm:flex-row gap-4 mb-2">
                     <select id="sim-fleet-select" class="flex-grow p-2 rounded-md bg-gray-800 border border-gray-600 text-white">
                         <!-- Sim fleet options will be injected here -->
                     </select>
@@ -84,6 +101,7 @@
                     <p class="font-bold text-green-300">Financial Pro-Forma Complete</p>
                     <p id="sim-revenue" class="text-white text-lg"></p>
                     <p id="sim-tco" class="text-sm text-gray-300"></p>
+                    <button id="onboard-fleet-btn" class="btn-primary mt-3 px-4 py-2 rounded-md hidden">Onboard Fleet</button>
                 </div>
             </div>
         </div>
