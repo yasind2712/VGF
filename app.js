@@ -40,6 +40,16 @@ const gridZones = {
     'CAISO Zone 4': { name: 'CAISO Zone 4', capacity: 1800, constraints: 'None', primarySubstation: 'San Jose Downtown' }
 };
 
+// Map common locations to grid zones (extend as needed)
+const locationToZone = {
+    'Oakland, CA': 'CAISO Zone 3',
+    'San Francisco, CA': 'CAISO Zone 3',
+    'Berkeley, CA': 'CAISO Zone 3',
+    'Fremont, CA': 'CAISO Zone 3',
+    'Oakland Port, CA': 'CAISO Zone 3',
+    'San Jose, CA': 'CAISO Zone 4'
+};
+
 // New dispatch requests tracking
 let dispatchRequests = [];
 
@@ -940,7 +950,9 @@ runSimBtn.addEventListener('click', () => {
             totalCapacityKWh: meta.capacity * customCount,
             type: customType,
             icon: meta.icon,
-            location: customLocation
+            location: customLocation,
+            gridZone: locationToZone[customLocation] || 'CAISO Zone 3',
+            substation: gridZones[locationToZone[customLocation] || 'CAISO Zone 3']?.primarySubstation || 'Unknown'
         };
 
         // Add to potential fleet templates for future reuse
@@ -1084,9 +1096,6 @@ const updateTelematicsData = () => {
 // --- UX: Deselect template when user customises fields ---
 const clearTemplateSelection = () => { 
     simFleetSelectEl.value = ''; 
-    fleetNameInputEl.value = '';
-    vehicleCountInputEl.value = '';
-    locationSelectEl.value = 'Oakland, CA'; // Reset to default
 };
 [fleetNameInputEl, vehicleTypeSelectEl, vehicleCountInputEl, locationSelectEl].forEach(el => {
     el.addEventListener('input', clearTemplateSelection);

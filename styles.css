@@ -360,4 +360,59 @@ body.light-mode #sim-results .text-green-300 {
 body.light-mode #sim-results .text-white,
 body.light-mode #sim-results .text-gray-300 {
     color: #065f46 !important;
+}
+
+/* Fix for Simulation input fields - ensure they are interactive */
+#fleet-name-input,
+#vehicle-count-input,
+#vehicle-type-select,
+#location-select {
+    pointer-events: auto !important;
+    z-index: 10 !important;
+    position: relative !important;
+    background-color: #1f2937 !important;
+    border: 1px solid #4b5563 !important;
+    color: #f9fafb !important;
+    padding: 0.5rem !important;
+    border-radius: 0.375rem !important;
+    font-size: 0.875rem !important;
+    line-height: 1.25rem !important;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out !important;
+}
+
+#fleet-name-input:focus,
+#vehicle-count-input:focus,
+#vehicle-type-select:focus,
+#location-select:focus {
+    outline: none !important;
+    border-color: #3b82f6 !important;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1) !important;
+}
+
+#fleet-name-input::placeholder,
+#vehicle-count-input::placeholder {
+    color: #9ca3af !important;
+}
+
+/* Light mode adjustments for simulation inputs */
+body.light-mode #fleet-name-input,
+body.light-mode #vehicle-count-input,
+body.light-mode #vehicle-type-select,
+body.light-mode #location-select {
+    background-color: #ffffff !important;
+    border-color: #d1d5db !important;
+    color: #1f2937 !important;
+}
+
+body.light-mode #fleet-name-input:focus,
+body.light-mode #vehicle-count-input:focus,
+body.light-mode #vehicle-type-select:focus,
+body.light-mode #location-select:focus {
+    border-color: #2563eb !important;
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1) !important;
+}
+
+body.light-mode #fleet-name-input::placeholder,
+body.light-mode #vehicle-count-input::placeholder {
+    color: #6b7280 !important;
 } 
